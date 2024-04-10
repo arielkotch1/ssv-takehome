@@ -27,12 +27,17 @@ export interface City {
   }
 }
 
+/**
+ * Home component displaying a list of cities with filtering and sorting options.
+ */
+
 function Home() {
   const router = useRouter()
   const [search, setSearch] = useState("")
   const [activeCities, setActiveCities] = useState(Cities.cities as Array<City>)
   const [filteredCities, setFilteredCities] = useState([] as Array<City>)
 
+  // Effect to initialize router query and active cities
   useEffect(() => {
     if (isEmpty(router.query)) {
       router.push({ query: { unit: System.METRIC, sort: Sort.ALL } })
@@ -42,6 +47,7 @@ function Home() {
     setActiveCities(Cities.cities.filter(({ active }) => active))
   }, [])
 
+  // Effect to filter cities based on search input
   useEffect(() => {
     setFilteredCities(
       activeCities.filter(
@@ -52,6 +58,7 @@ function Home() {
     )
   }, [search])
 
+  // Effect to sort cities based on the sort query parameter
   useEffect(() => {
     const { sort } = router.query
     if (sort === Sort.ALL) {

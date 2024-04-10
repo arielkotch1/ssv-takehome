@@ -13,6 +13,13 @@ import { useEffect, useState } from "react"
 import { Box, Flex } from "rebass/styled-components"
 import { City } from ".."
 
+/**
+ * Retrieves weather information from the WeatherAPI based on the provided coordinates and system units.
+ * @param system The system units to use (metric or imperial).
+ * @param lat Latitude coordinate of the city.
+ * @param lng Longitude coordinate of the city.
+ * @returns Weather information.
+ */
 const getWeather = async ({ system, lat, lng }: { system: System; lat: number; lng: number }) => {
   const { data } = await axios.get(`
   http://api.weatherapi.com/v1/forecast.json?key=70065ce635d54b1cb3b122616240904&q=${lat},${lng}&days=4&aqi=no&alerts=no`)
@@ -43,6 +50,9 @@ const getWeather = async ({ system, lat, lng }: { system: System; lat: number; l
   }
 }
 
+/**
+ * City component displaying weather information for a specific city.
+ */
 const City = () => {
   const router = useRouter()
   const params = useParams()
@@ -50,6 +60,7 @@ const City = () => {
   const system = router.query.unit
   const [city, setCity] = useState({} as City)
 
+  // Effect to fetch city details based on router query parameter
   useEffect(() => {
     const found = Cities.cities.find(({ name }) => name === router.query.name)
     if (found) {
@@ -57,6 +68,7 @@ const City = () => {
     }
   }, [params])
 
+  // Effect to fetch weather information when city is available
   useEffect(() => {
     if (!isEmpty(city)) {
       ;(async () => {
