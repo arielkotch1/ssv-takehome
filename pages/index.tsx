@@ -86,10 +86,6 @@ function Home() {
               key: Sort.NAME,
               value: "Name",
             },
-            {
-              key: Sort.LOCATION,
-              value: "Location",
-            },
           ]}
         />
         <Dropdown
